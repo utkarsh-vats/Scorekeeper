@@ -1,57 +1,60 @@
 
-var button1=document.querySelector("#counter1");
-var p1s=document.querySelector("#score1");
-var score1=0;
-var button2=document.querySelector("#counter2");
-var p2s=document.querySelector("#score2");
-var score2=0;
- var reset=document.querySelector("#reset");
+// Elements accessed
+var button1=document.getElementById("counter1");
+var playerOneScore=document.getElementById("score1");
+var button2=document.getElementById("counter2");
+var playerTwoScore=document.getElementById("score2");
+var reset=document.getElementById("reset");
+var winner=document.getElementById("winner");
 
-var winner=document.querySelector("#winner")
-button1.addEventListener("click",function(){
-               var limit=document.querySelector("#limit").value;
+// Score variables
+var score1=0;
+var score2=0;
+
+// Setting up initial scores
+playerOneScore.innerText = score1;
+playerTwoScore.innerText = score2;
+
+// Event listeners
+button1.addEventListener("click",(() => {
+    var limit=document.getElementById("limit").value;
     score1++;
-    p1s.textContent=score1;
-    if(score1==limit||(score1>score2 && score1>limit))
-       {
-       p1s.classList.add("green");
-        button1.setAttribute("disabled","true");
-        button2.setAttribute("disabled","true");
-    printWinner();
-       }
-})
-button2.addEventListener("click",function(){
-               var limit=document.querySelector("#limit").value;
+    playerOneScore.textContent=score1;
+    if(score1==limit||(score1>score2 && score1>limit)){
+      playerOneScore.classList.add("green");
+      button1.setAttribute("disabled","true");
+      button2.setAttribute("disabled","true");
+      printWinner();
+    }
+}));
+
+button2.addEventListener("click",(() => {
+    var limit=document.getElementById("limit").value;
     score2++;
-    p2s.textContent=score2;
-    if(score2==limit||(score2>score1 && score2>limit))
-       {
-       p2s.classList.add("green");
+    playerTwoScore.textContent=score2;
+    if(score2==limit||(score2>score1 && score1>limit)){
+       playerTwoScore.classList.add("green");
         button1.setAttribute("disabled","true");
         button2.setAttribute("disabled","true");
-          printWinner();
-       }
-                       
-})
-reset.addEventListener("click",function(){
-      button1.removeAttribute("disabled","true");
-        button2.removeAttribute("disabled","true");
-       p1s.classList.remove("green");
-      p2s.classList.remove("green");
-    score1=0;
-    score2=0;
-    p1s.textContent=score1;
-      p2s.textContent=score2;
-    document.querySelector("#limit").value=5;
+      }
+    printWinner();
+}));
+
+reset.addEventListener("click",(() => {
+    button1.removeAttribute("disabled","true");
+    button2.removeAttribute("disabled","true");
+    playerOneScore.classList.remove("green");
+    playerTwoScore.classList.remove("green");
+    score1,score2=0;
+    playerOneScore.textContent=score1;
+    playerTwoScore.textContent=score2;
+    document.getElementById("limit").value=5;
     winner.textContent="";
-})
+}));
+
+// Printing the winner
 function printWinner(){
-    if(score1>score2){
-        winner.textContent="Player1";
-    }
-    else{
-      winner.textContent="Player2";
-    }
+    winner.textContent = (score1 > score2) ? "Player1" : "Player2";
 }
     
     
